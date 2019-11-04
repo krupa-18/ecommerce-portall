@@ -1,24 +1,29 @@
 var express = require("express")
 var bodyParser = require("body-parser")
-
 var products = require("./routes/products")
 var cors = require("cors")
-var path = require('path'); 
 
-var port = 4000
+//var port = 4000
 
 var app = express()
-
-path.join(__dirname, './images')
 
 app.use(cors())
 
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+
+var Users = require('./routes/Users')
+
+
+app.use('/users', Users)
+
 app.use("/", products)
 
-
-app.listen(port, function(){
-    console.log("Server started on port"+ port)
-})
+var server = app.listen(4000, function () {
+ 
+  var host = server.address().address
+  var port = server.address().port
+  
+  console.log("App listening at http://%s:%s", host, port)
+  });

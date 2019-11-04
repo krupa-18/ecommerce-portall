@@ -1,0 +1,9 @@
+{
+	"user_id":"2",
+	"product_id": "2",
+	"product_title": "dell",
+	"product_description": "sadsd",
+	"product_price": "1445",
+	"product_logo": "dell.jpg",
+	"no_of_items": "2"
+}
