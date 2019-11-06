@@ -4,8 +4,6 @@ const cors = require('cors')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 
-
-
 const User = require('../model/User')
 users.use(cors())
 
@@ -57,7 +55,7 @@ users.post('/login', (req, res) => {
       if (user) {
         if (bcrypt.compareSync(req.body.password, user.password)) {
           let token = jwt.sign(user.dataValues, process.env.SECRET_KEY, {
-            expiresIn: 1440
+            expiresIn: 14400
           })
           res.send(token)
         }
@@ -69,48 +67,4 @@ users.post('/login', (req, res) => {
       res.status(400).json({ error: err })
     })
 })
-// function verifyToken(req, res, next) {
-//   // Get auth header value
-//   const bearerHeader = req.headers['authorization'];
-//   // Check if bearer is undefined
-//   if(typeof bearerHeader !== 'undefined') {
-//     // Split at the space
-//     const bearer = bearerHeader.split(' ');
-//     // Get token from array
-//     const bearerToken = bearer[1];
-//     // Set the token
-//     req.token = bearerToken;
-//     // Next middleware
-//     next();
-//   } else {
-//     // Forbidden
-//     res.sendStatus(403);
-//   }
-
-// }
-
-// users.post('/addtocart',  verifyToken, (req, res) => {
-// //   var cartData = {
-// //     id: req.body.id,
-// //     user_id: req.authData.id,
-// //     product_id: req.body.product_id,
-// //     product_title: req.body. product_title,
-// //     product_description: req.body. product_description,
-// //     product_price: req.body. product_price,
-// //     product_logo: req.body. product_logo,
-// //     no_of_items: req.body.no_of_item 
-// // }   
-//   jwt.verify(req.token, 'secret', (err, authData) => {
-//       if(err) {
-//         res.sendStatus(403);
-//       } else {
-//           res.json({
-//             message: 'Post created...',
-//             authData
-//           })
-//         }
-//       });
-//     });
-
-
 module.exports = users;
