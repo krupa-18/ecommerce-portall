@@ -2,6 +2,7 @@ var express = require("express")
 var bodyParser = require("body-parser")
 var products = require("./routes/products")
 var Carts = require("./routes/Carts")
+var Orders = require("./routes/Orders")
 var cors = require("cors")
 
 //var port = 4000
@@ -22,6 +23,8 @@ app.use('/users', Users)
 app.use("/", products)
 
 app.use('/carts', Carts)
+
+app.use('/orders', Orders)
 
 var server = app.listen(4000, function () {
  
