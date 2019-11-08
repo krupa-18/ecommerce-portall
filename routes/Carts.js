@@ -2,6 +2,8 @@ var express = require("express")
 var carts = express.Router()
 const Cart = require("../model/Cart")
 const jwt = require("jsonwebtoken")
+const Sequelize = require('sequelize');
+const Op =Sequelize.Op;
 
 function verifyToken(req, res, next) {
     // Get auth header value
@@ -31,6 +33,21 @@ carts.get('/getcartitemsbyuserid',  verifyToken, (req, res) => {
             user_id: user_id
             } })
             .then(cartproducts=>res.json(cartproducts))
+            .catch(err => res.send("error:" +err));
+        }
+    })
+});
+carts.get('/get-merchandise-amount',  verifyToken, (req, res) => {
+    jwt.verify(req.token, 'secret', (err, authData) => {
+        var user_id = authData.id; 
+        if(err) {
+            res.sendStatus(403);
+        } else {
+            Cart.findAll({
+            attributes: [[Sequelize.fn('SUM', Sequelize.col('total_amount')), 'total_amount']],
+            where: {[Op.and]: [{user_id: {[Op.eq]: user_id}}]},
+            }) 
+            .then(totalamount=>res.json(totalamount))
             .catch(err => res.send("error:" +err));
         }
     })

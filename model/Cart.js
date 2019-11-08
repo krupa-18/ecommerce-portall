@@ -30,6 +30,9 @@ module.exports = db.sequelize.define(
         no_of_items: {
             type: Sequelize.BIGINT
         },
+        total_amount: {
+            type: Sequelize.DECIMAL
+        },
         delete_flag:{
             type: Sequelize.TINYINT
         },
